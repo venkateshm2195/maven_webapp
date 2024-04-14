@@ -25,8 +25,9 @@ pipeline{
               }
             stage("deploy"){
             steps{
-              sshagent(['Ubuntu']) {
-                 sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@3.84.22.129:/opt/tomcat/webapps"
+              sshagent(['ubuntu']) {
+                // sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ubuntu@3.84.22.129:/opt/tomcat/webapps"
+                deploy adapters: [tomcat8(credentialsId: 'Nimbuswiz-Tomcat', path: '', url: 'http://3.88.174.161:8080/')], contextPath: 'webapps', war: 'target/*.war'  
                     }
                 }
             }
